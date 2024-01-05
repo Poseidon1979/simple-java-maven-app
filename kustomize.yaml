@@ -1,0 +1,7 @@
+namespace: app
+namePrefix: dev-
+nameSuffix: "-001"
+commonLabels:
+  app: bingo
+resources:
+- myapp.yaml
