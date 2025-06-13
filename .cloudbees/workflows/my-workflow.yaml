@@ -22,3 +22,12 @@ jobs:
         name: build
         with:
           project-folder: ./simple_java_app/
+#      - name: Upload file to JFrog Artifactory
+#        uses: https://github.com/cloudbees-io/jfrog-artifactory-upload-file@v1
+#        with:
+#          url: ${{ JFROG_URL }}
+#          username: ${{ secrets.JFROG_USERNAME }}
+#          password: ${{ secrets.JFROG_PASSWORD }}
+#          token: ''
+#          file-path: ./simple_java_app/
+#          artifactory-path: "test-image.tar"
