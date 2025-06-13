@@ -22,7 +22,7 @@ jobs:
         name: build
         with:
           project-folder: ./simple_java_app/
-      - uses: docker://alphine:latest
+      - uses: docker://alpine:latest
         run: |
           ls ./simple_java_app/
       - name: Upload file to JFrog Artifactory
