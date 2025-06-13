@@ -25,7 +25,7 @@ jobs:
       - name: Upload file to JFrog Artifactory
         uses: https://github.com/cloudbees-io/jfrog-artifactory-upload-file@v1
         with:
-          url: ${{ JFROG_URL }}
+          url: ${{ vars.JFROG_URL }}
           #username: ${{ secrets.JFROG_USERNAME }}
           #password: ${{ secrets.JFROG_PASSWORD }}
           token: ${{ secrets.JFROG_TOKEN }}
