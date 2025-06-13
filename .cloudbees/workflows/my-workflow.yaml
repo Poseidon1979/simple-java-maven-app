@@ -24,7 +24,7 @@ jobs:
           project-folder: ./simple_java_app/
       - uses: docker://alpine:latest
         run: |
-          ls ./simple_java_app/
+          ls ./simple_java_app/target/
       - name: Upload file to JFrog Artifactory
         uses: https://github.com/cloudbees-io/jfrog-artifactory-upload-file@v1
         with:
