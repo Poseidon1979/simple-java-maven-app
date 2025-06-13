@@ -29,5 +29,5 @@ jobs:
 #          username: ${{ secrets.JFROG_USERNAME }}
 #          password: ${{ secrets.JFROG_PASSWORD }}
 #          token: ''
-#          file-path: ./simple_java_app/
-#          artifactory-path: "test-image.tar"
+#          file-path: ./simple_java_app/target/my-app-1.0-SNAPSHOT.jar
+#          artifactory-path: my-app-1.0.tar
