@@ -32,6 +32,6 @@ jobs:
           #token: ${{ secrets.JFROG_TOKEN }}
           #artifactory-path: artifactory//aop-cicd-kotlin//my-app-1.0.tar
           url: paulyang.jfrog.io
-          token: ${{ secrets.JFROG_TOKEN_paul }}
+          token: ${{ secrets.JFROG_TOKEN_PAUL }}
           artifactory-path: paul-gradle-dev/local
           file-path: /cloudbees/workspace/simple_java_app/target/my-app-1.0-SNAPSHOT.jar
