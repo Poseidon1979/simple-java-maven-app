@@ -33,7 +33,7 @@ jobs:
           #password: ${{ secrets.JFROG_PASSWORD }}
           token: ${{ secrets.JFROG_TOKEN }}
           file-path: /cloudbees/workspace/simple_java_app/target/my-app-1.0-SNAPSHOT.jar
-          artifactory-path: artifactory/aop-cicd-kotlin/my-app-1.0.tar
+          artifactory-path: artifactory//aop-cicd-kotlin//my-app-1.0.tar
       - uses: docker://alpine:latest
         run: |
           env
