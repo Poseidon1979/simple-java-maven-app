@@ -1,0 +1,58 @@
+name: Maven build, test and deliver
+
+# No Jenkinsfile trigger was defined; preserve manual execution.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  maven:
+    runs-on: ubuntu-latest
+    container:
+      image: maven:3.9.0
+    steps:
+      # actions/checkout v7.0.1
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+
+      # Replace the Jenkins host volume with a cache of the container repository.
+      # A fresh key lets successful runs persist locally installed application JARs.
+      # actions/cache v6.1.0
+      - name: Restore Maven repository
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        with:
+          path: /root/.m2
+          key: ${{ runner.os }}-maven-3.9.0-${{ hashFiles('**/pom.xml') }}-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: |
+            ${{ runner.os }}-maven-3.9.0-${{ hashFiles('**/pom.xml') }}-
+
+      - name: Build
+        run: mvn -B -DskipTests clean package
+
+      - name: Test
+        id: test
+        run: mvn test
+
+      # Preserve the Test stage's always-published XML, including failed tests.
+      # GitHub stores the reports as artifacts rather than Jenkins JUnit views.
+      # actions/upload-artifact v7.0.2
+      - name: Publish JUnit XML reports
+        if: ${{ always() && steps.test.outcome != 'skipped' }}
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: junit-reports
+          path: target/surefire-reports/*.xml
+          if-no-files-found: error
+
+      # Inline deliver.sh so the archived original is not a runtime dependency.
+      - name: Deliver
+        shell: bash
+        run: |
+          mvn jar:jar install:install help:evaluate -Dexpression=project.name
+          NAME="$(mvn help:evaluate -Dexpression=project.name -q -DforceStdout)"
+          VERSION="$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)"
+          java -jar "target/${NAME}-${VERSION}.jar"
